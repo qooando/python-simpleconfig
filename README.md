@@ -15,7 +15,7 @@ thanks to a simple monkey patch of default serializer that looks up for
 
 ```python3
 import simpleconfig as sc
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import List, Mapping
 
 data = '''---
@@ -31,15 +31,21 @@ school:
         - A. Buffy
 '''
 
+
 @dataclass
 class SchoolClass(sc.Config):
-    
-    
+    className: str = ""
+    teachers: List[str] = field(default_factory=list)
+
 @dataclass
 class School(sc.Config):
-    classes: List[SchoolClass]
-    
-school = sc.loads(data, "yaml", Config=School)
+    classes: List[SchoolClass] = field(default_factory=list)
 
-print(school.classes[1].teachers[0]) # L. Watson
+@dataclass
+class MyConfig(sc.Config):
+    school: School = None
+
+schoolConfig = sc.loads(data, srcFormat="yaml", Config=MyConfig)
+
+print(schoolConfig.school.classes[1].teachers[0]) # L. Watson
 ```

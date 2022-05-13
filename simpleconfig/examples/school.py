@@ -31,4 +31,4 @@ class MyConfig(sc.Config):
 
 schoolConfig = sc.loads(data, srcFormat="yaml", Config=MyConfig)
 
-print(schoolConfig)
+print(schoolConfig.school.classes[1].teachers[0]) # L. Watson
