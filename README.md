@@ -49,3 +49,10 @@ schoolConfig = sc.loads(data, srcFormat="yaml", Config=MyConfig)
 
 print(schoolConfig.school.classes[1].teachers[0]) # L. Watson
 ```
+
+You can also register your loads and dumps function using `@ConfigLoader("myFormat")` and `@ConfigDumper("myFormat")`
+decorators above the selected functions.
+
+Note that the loader performs also the type check. To disable the typecheck use the `@allow_type_mismatch_fields`
+decorator above the config class.
+

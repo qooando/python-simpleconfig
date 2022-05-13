@@ -47,11 +47,11 @@ __all__ = [
 # =============================================================
 
 class LoaderNotFoundError(Exception):
-    pass
+    """ Raised if the loader does not exist """
 
 
 class DumperNotFoundError(Exception):
-    pass
+    """ Raised if the dumper does not exist """
 
 
 # =============================================================
@@ -60,6 +60,13 @@ class DumperNotFoundError(Exception):
 
 @dataclasses.dataclass()
 class Config:
+    """
+    Basic class for an easy-to-use config.
+    It permits json serialization (thanks to json serialize monkey patch), serialization and
+    access control for set attributes.
+
+    To disable set attribute control access, decorate your class with @allow_unknown_fields
+    """
     __initialized = False
     def __post_init__(self):
         self.__initialized = True
@@ -81,6 +88,9 @@ class Config:
 def ConfigLoader(format: str):
     """
     Function decorator that registers the function as a loader for the specified format
+
+    :param format: the loader name as string (e.g. json)
+    :return: the function itself
     """
     def inner(target):
         _loaders[format] = target
@@ -91,6 +101,9 @@ def ConfigLoader(format: str):
 def ConfigDumper(format: str):
     """
     Function decorator that registers the function as a dumper for the specified format
+
+    :param format: the loader name as string (e.g. json)
+    :return: the function itself
     """
     def inner(target):
         _dumpers[format] = target
@@ -102,6 +115,8 @@ def allow_unknown_fields(target):
     """
     Decorator that allows the load function to set unknown fields
     not previously initialized in the target object
+
+    Apply it to the config class
     """
     target.ALLOW_UNKNOWN_FIELDS = True
     return target
@@ -110,6 +125,8 @@ def allow_unknown_fields(target):
 def allow_type_mismatch_fields(target):
     """
     Decorator that allows to assign mismatching types to fields
+
+    Apply it to the config class
     """
     target.ALLOW_TYPE_MISMATCH_FIELDS = True
     return target
