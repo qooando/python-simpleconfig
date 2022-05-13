@@ -56,3 +56,6 @@ decorators above the selected functions.
 Note that the loader performs also the type check. To disable the typecheck use the `@allow_type_mismatch_fields`
 decorator above the config class.
 
+`Config` class prevents to set unknown fields, to restore classic python behavior prepend the `@allow_unknown_fields`
+decorator to the config class.
+
