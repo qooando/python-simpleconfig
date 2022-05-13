@@ -3,8 +3,7 @@ Another really simple python library to import configuration files to python dat
 
 ## How-to
 
-The library provides classic `load`, `loads`, `dump`, `dumps` functions with
-capability to infer the type of the content.
+The library provides classic `load`, `loads`, `dump`, `dumps` functions.
 
 The class `Config` can be extended to custom configuration classes
 with typed fields, it also permits json serialization out of the box
